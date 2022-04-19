@@ -16,17 +16,17 @@ public class PatintMvcApplication {
         SpringApplication.run(PatintMvcApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(PatientRepository patientRepository) {
         return args -> {
             patientRepository.save(
-                    new Patient(null, "Hassan", new Date(), false, 12));
+                    new Patient(null, "Hassan", new Date(), false, 122));
             patientRepository.save(
                     new Patient(null, "Mohammed", new Date(), true, 321));
             patientRepository.save(
-                    new Patient(null, "Yasmine", new Date(), true, 65));
+                    new Patient(null, "Yasmine", new Date(), true, 200));
             patientRepository.save(
-                    new Patient(null, "Hane", new Date(), false, 32));
+                    new Patient(null, "Hane", new Date(), false, 300));
             patientRepository.findAll().forEach(p->{
                 System.out.println(p.getNom());
             });
