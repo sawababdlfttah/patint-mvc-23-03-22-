@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.exceptionHandling().accessDeniedPage("/404");
+        //
     }
     @Bean // bean au demarrage creer moi un objet de type password Encoder
     PasswordEncoder passwordEncoder(){
