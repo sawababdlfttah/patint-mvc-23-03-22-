@@ -38,8 +38,8 @@ public class PatintMvcApplication {
         securityService.saveNewUser("sawab","1234","1234");
         securityService.saveNewUser("toto","1234","1234");
         securityService.saveNewUser("fifi","1234","1234");
-        SecurityService.s
+
         };
-}
+}}
 
 
