@@ -2,11 +2,11 @@ package com.emsi.patintmvc;
 
 import com.emsi.patintmvc.entities.Patient;
 import com.emsi.patintmvc.repositories.PatientRepository;
+import com.emsi.patintmvc.sec.service.SecurityService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import java.util.Date;
 
 @SpringBootApplication
@@ -30,10 +30,16 @@ public class PatintMvcApplication {
             patientRepository.findAll().forEach(p->{
                 System.out.println(p.getNom());
             });
-
-
         };
     }
+    @Bean
+    CommandLineRunner saveUsers(SecurityService securityService){
+        return  args -> {
+        securityService.saveNewUser("sawab","1234","1234");
+        securityService.saveNewUser("toto","1234","1234");
+        securityService.saveNewUser("fifi","1234","1234");
+        SecurityService.s
+        };
 }
 
 
