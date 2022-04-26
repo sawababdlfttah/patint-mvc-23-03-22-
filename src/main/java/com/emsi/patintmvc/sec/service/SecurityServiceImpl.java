@@ -73,7 +73,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public void removeRoleFromUser(String username, String roleName) {
             AppUser appUser=appUserRepository.findByUsername(username);
-            if (appUser==null)throw new RuntimeException("Uset not found");
+            if (appUser==null)throw new RuntimeException("User not found");
             AppRole appRole=appRoleRepository.findByRoleName(roleName);
             if (appRole==null)throw new RuntimeException("Role not found");
             appUser.getAppRoles().remove(appRole);
@@ -81,6 +81,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
     @Override
     public AppUser loadUserByUserName(String username) {
+
         return appUserRepository.findByUsername(username);
     }
 }

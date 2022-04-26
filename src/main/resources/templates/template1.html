@@ -43,11 +43,10 @@
             <a   class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                 <span sec:authentication="name"></span>
             </a>
-
             <ul class="dropdown-menu"  >
                 <li><a class="dropdown-item" th:href="@{/logout}"> Logout</a></li>
             </ul>
-
+        </li>
         </li>
             <li class="nav-item">
                 <a class="nav-link"  sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
