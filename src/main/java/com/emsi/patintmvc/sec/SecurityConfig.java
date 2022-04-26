@@ -1,5 +1,6 @@
 package com.emsi.patintmvc.sec;
 
+import com.emsi.patintmvc.sec.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +22,14 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 
-        PasswordEncoder passwordEncoder=passwordEncoder();
  /*
         String encodedPWD=passwordEncoder.encode("12345") ;
         System.out.printf(encodedPWD);
@@ -52,6 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder);
 
 */
+        auth.userDetailsService(userDetailsService);
+
+        /*
     // strategie user details services
         auth.userDetailsService(new UserDetailsService() {
             @Override
@@ -60,20 +67,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         });
 
+         */
+
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin();
         http.authorizeRequests().antMatchers("/").permitAll();
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/user/**").hasRole("USER");
+        http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/user/**").hasAuthority("USER");
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.exceptionHandling().accessDeniedPage("/404");
         //
     }
-    @Bean // bean au demarrage creer moi un objet de type password Encoder
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 }

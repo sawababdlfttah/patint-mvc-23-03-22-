@@ -9,7 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.security.util.Password;
+//import sun.security.util.Password;
+
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Slf4j  // permet de loger les informations
 // constructor avec parametre
 @AllArgsConstructor
-@org.springframework.transaction.annotation.Transactional
+@Transactional
 public class SecurityServiceImpl implements SecurityService {
     private AppUserRepository appUserRepository;
     private AppRoleRepository appRoleRepository;
@@ -55,14 +56,14 @@ public class SecurityServiceImpl implements SecurityService {
         AppRole savedAppRole= appRoleRepository.save(appRole);
         return savedAppRole;
     }
-    @Transactional
+   // @Transactional
     //transactional ????????????? n'a pas besion de faire save  ???
     @Override
     public void addRoleToUser(String username, String roleName) {
         AppUser appUser=appUserRepository.findByUsername(username);
-        if (appUser!=null)throw new RuntimeException("Uset not found");
+        if (appUser==null)throw new RuntimeException("Uset not found");
         AppRole appRole=appRoleRepository.findByRoleName(roleName);
-        if (appRole!=null)throw new RuntimeException("Role not found");
+        if (appRole==null)throw new RuntimeException("Role not found");
         appUser.getAppRoles().add(appRole);
     // c'est pas obligatoir a cause de transactional     appUserRepository.save(appUser);
 
@@ -72,16 +73,14 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public void removeRoleFromUser(String username, String roleName) {
             AppUser appUser=appUserRepository.findByUsername(username);
-            if (appUser!=null)throw new RuntimeException("Uset not found");
+            if (appUser==null)throw new RuntimeException("Uset not found");
             AppRole appRole=appRoleRepository.findByRoleName(roleName);
-            if (appRole!=null)throw new RuntimeException("Role not found");
+            if (appRole==null)throw new RuntimeException("Role not found");
             appUser.getAppRoles().remove(appRole);
 
     }
-
     @Override
     public AppUser loadUserByUserName(String username) {
-
         return appUserRepository.findByUsername(username);
     }
 }
